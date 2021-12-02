@@ -25,7 +25,8 @@ def scrapeRecipe(ingredientName):
     ingredientName = ingredientName.replace(" ", "+")
     url = 'https://www.allrecipes.com/search/results/?search=' + ingredientName
     resp = requests.get(url)
-    htmlDocument = BeautifulSoup(resp.content, "html.parser")
+    resp = resp.text
+    htmlDocument = BeautifulSoup(resp, "html.parser")
     linkDict = grabRecipeLinks(htmlDocument)
     return linkDict
 
