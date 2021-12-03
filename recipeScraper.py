@@ -18,6 +18,7 @@ to learn how to use requests and to learn about response.text.
 All code is my own.
 """
 
+
 def grabRecipeLinks(html):
     """Finds three recipe links on html Page from Allrecipes returns 
     them in a dictionary with the title of the recipe as the key"""
@@ -30,12 +31,14 @@ def grabRecipeLinks(html):
             linkColl[recipeTitle] = recipeUrl
     return linkColl
 
+
 def requestPageGetHtml(url):
     """Requests text information from url page and returns None if status code is 404 or
     an Beautiful soup object that contains page"s html"""
     resp = requests.get(url)
     resp = resp.text
     return BeautifulSoup(resp, "html.parser")
+
 
 def scrapeRecipes(ingredientName):
     """Takes an ingredient name and returns a dictionary with three 
@@ -46,10 +49,12 @@ def scrapeRecipes(ingredientName):
     linkDict = grabRecipeLinks(htmlDocument)
     return linkDict
 
+
 @application.route("/recipeScraper/<string:ingredientName>", methods=["Get"])
 def wikiScraper(ingredientName: str):
     resp = scrapeRecipes(ingredientName)
     return jsonify(resp)
+
 
 if __name__ == "__main__":
     application.run("127.0.0.1", 3033)
